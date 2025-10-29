@@ -1,0 +1,73 @@
+<!-- components/sidebar.html -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        <i class="fas fa-gavel fa-2x"></i>
+        <h2>Agenda Legal</h2>
+    </div>
+    
+    <div class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item" data-page="dashboard">
+            <i class="fas fa-chart-bar"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="audiencias.html" class="nav-item" data-page="audiencias">
+            <i class="fas fa-gavel"></i>
+            <span>Audiencias</span>
+        </a>
+        <a href="terminos.html" class="nav-item" data-page="terminos">
+            <i class="fas fa-clock"></i>
+            <span>Términos</span>
+        </a>
+        <a href="asuntos.html" class="nav-item" data-page="asuntos">
+            <i class="fas fa-folder-open"></i>
+            <span>Asuntos</span>
+        </a>
+        <a href="agenda-general.html" class="nav-item" data-page="agenda-general">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Agenda General</span>
+        </a>
+    </div>
+    
+    <!-- Gestor de Documentos en el Sidebar -->
+    <div class="sidebar-document-manager">
+        <h3><i class="fas fa-folder"></i> Gestor de Documentos</h3>
+        
+        <!-- Sección de Expedientes -->
+        <div class="sidebar-folder" id="sidebar-expedientes">
+            <i class="fas fa-folder"></i>
+            <span>Expedientes</span>
+            <button class="add-item-btn" id="add-expediente">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+        <div class="sidebar-folder-content" id="sidebar-expedientes-content">
+            <div class="sidebar-document-item">
+                <i class="fas fa-file-pdf"></i>
+                <span>2375/2025 - Ortega Ibarra</span>
+            </div>
+            <div class="sidebar-document-item">
+                <i class="fas fa-file-pdf"></i>
+                <span>2012/2025 - Valdez Sánchez</span>
+            </div>
+        </div>
+        
+        <!-- Sección de Documentos -->
+        <div class="sidebar-folder" id="sidebar-documentos">
+            <i class="fas fa-folder"></i>
+            <span>Documentos</span>
+            <button class="add-item-btn" id="add-documento">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+        <div class="sidebar-folder-content" id="sidebar-documentos-content">
+            <div class="sidebar-document-item">
+                <i class="fas fa-file-word"></i>
+                <span>Plantilla demanda</span>
+            </div>
+            <div class="sidebar-document-item">
+                <i class="fas fa-file-word"></i>
+                <span>Formato contestación</span>
+            </div>
+        </div>
+    </div>
+</div>
