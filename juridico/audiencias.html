@@ -158,10 +158,11 @@
                                 <th>Tribunal</th>
                                 <th>Expediente</th>
                                 <th>Actor</th>
+                                <th>Acta de Audiencia</th>
                                 <th>Acciones</th>
                             </tr>
-                        </thead>
-                        <tbody id="audiencias-body">
+                        </thead>    
+                    <tbody id="audiencias-body">
                             <!-- Los datos se cargarán dinámicamente -->
                         </tbody>
                     </table>
@@ -275,6 +276,42 @@
             </div>
         </div>
     </div>
+        <!-- nuevo modal  -->
+    <!-- Modal Comentarios -->
+        <div class="modal" id="modal-comentarios">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+            <h2>Comentarios de la audiencia</h2>
+            <button class="btn btn-danger" id="close-modal-comentarios">
+                <i class="fas fa-times"></i>
+            </button>
+            </div>
+
+            <div class="modal-body">
+            <input type="hidden" id="comentarios-audiencia-id">
+            
+            <div class="form-group">
+                <label for="nuevo-comentario">Nuevo comentario</label>
+                <textarea id="nuevo-comentario" rows="3" placeholder="Escribe tu comentario..."></textarea>
+            </div>
+
+            <div class="modal-footer" style="padding-left: 0;">
+                <button class="btn btn-success" id="save-comentario">
+                <i class="fas fa-paper-plane"></i> Guardar comentario
+                </button>
+            </div>
+
+            <hr>
+
+            <div>
+                <h3 style="margin-top: 0;">Historial</h3>
+                <ul id="lista-comentarios" class="comment-list" style="list-style: none; padding-left: 0; margin: 0;">
+                <!-- Se llena dinámicamente -->
+                </ul>
+            </div>
+            </div>
+        </div>
+        </div>
 
     <!-- Scripts -->
     <script src="js/audiencias.js"></script>
@@ -284,6 +321,7 @@
                 initAudiencias();
             }
             initModalAudiencias();
+             initModalComentarios(); // <- AÑADIDO
         });
 
         function initModalAudiencias() {
