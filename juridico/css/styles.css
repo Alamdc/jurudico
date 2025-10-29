@@ -780,6 +780,9 @@ tr:hover {
 .stat-terminos {
     border-left: 4px solid var(--termino-color);
 }
+.stat-presentado{
+    border-left: 4px solid var(--presentado-color);
+}
 
 .stat-pendientes {
     border-left: 4px solid var(--warning);

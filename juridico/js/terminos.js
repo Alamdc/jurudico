@@ -76,9 +76,7 @@ function loadTerminos() {
                     <button class="btn btn-primary btn-sm edit-termino" data-id="${termino.id}">
                         <i class="fas fa-edit"></i>
                     </button>
-                    <button class="btn btn-danger btn-sm delete-termino" data-id="${termino.id}">
-                        <i class="fas fa-trash"></i>
-                    </button>
+                    
                     ${termino.estatus !== 'Presentado' ? 
                         `<button class="btn btn-presentado btn-sm mark-presentado" data-id="${termino.id}">
                             <i class="fas fa-check"></i> Presentar

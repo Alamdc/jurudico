@@ -139,59 +139,17 @@
                     </div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-icon pendiente">
-                        <i class="fas fa-exclamation-circle"></i>
+                    <div class="stat-icon completado ">
+                        <i class="fas fa-bell"></i>
                     </div>
                     <div class="stat-info">
                         <div class="stat-number" id="total-pendientes">0</div>
-                        <div class="stat-label">Pendientes</div>
-                    </div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon urgente">
-                        <i class="fas fa-fire"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-number" id="total-urgentes">0</div>
-                        <div class="stat-label">Urgentes</div>
+                        <div class="stat-label">Presentados</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Vista de agenda -->
-            <div class="agenda-view">
-                <!-- Vista por Días -->
-                <div class="view-section active" id="view-dias">
-                    <div class="section-header">
-                        <h3><i class="fas fa-calendar-day"></i> Vista por Días</h3>
-                        <div class="date-navigation">
-                            <button class="btn btn-sm btn-outline" id="prev-week">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <span class="current-week" id="current-week">Semana actual</span>
-                            <button class="btn btn-sm btn-outline" id="next-week">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="days-grid" id="days-grid">
-                        <!-- Los días se cargarán dinámicamente -->
-                    </div>
-                </div>
-
-                <!-- Vista de Lista -->
-                <div class="view-section" id="view-lista">
-                    <div class="section-header">
-                        <h3><i class="fas fa-list"></i> Vista de Lista</h3>
-                    </div>
-                    
-                    <div class="agenda-list" id="agenda-list">
-                        <!-- Los eventos se cargarán dinámicamente -->
-                    </div>
-                </div>
-            </div>
-
+          
             <!-- Eventos del día de hoy -->
             <div class="hoy-section">
                 <div class="section-header">

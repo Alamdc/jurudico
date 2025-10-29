@@ -79,6 +79,9 @@
 .stat-icon.urgente {
     background: linear-gradient(135deg, #e74c3c, #d35400);
 }
+.stat-icon.completado{
+    background: linear-gradient(135deg, #5002e0 , #8702e0);
+}
 
 .stat-info {
     flex: 1;
