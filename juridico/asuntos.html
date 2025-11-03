@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/vista360.css">
     <link rel="stylesheet" href="css/asuntos.css"> 
-
 </head>
 <body>
     <!-- Sidebar de navegación -->
@@ -38,11 +37,7 @@
                 <i class="fas fa-calendar-alt"></i>
                 <span>Agenda General</span>
             </a>
-
-            
         </div>
-        
-        <!-- Gestor de Documentos en el Sidebar -->
     </div>
     
     <!-- Contenido principal -->
@@ -116,6 +111,12 @@
                 </div>
             </div>
 
+            <!-- Gráfica: Expedientes por Gerencia -->
+            <div class="chart-container" style="max-width: 600px; margin: 20px auto;">
+                <h3 style="text-align:center;"><i class="fas fa-chart-pie"></i> Expedientes por Gerencia</h3>
+                <canvas id="grafica-gerencias"></canvas>
+            </div>
+
             <!-- Lista de asuntos -->
             <div class="asuntos-grid" id="asuntos-grid">
                 <!-- Los asuntos se cargarán dinámicamente -->
@@ -149,73 +150,73 @@
         </div>
     </div>
 
-                        <!-- Modal: Nuevo Asunto -->
-            <div class="modal" id="modal-nuevo-asunto">
-            <div class="modal-content">
-                <div class="modal-header">
+    <!-- Modal: Nuevo Asunto -->
+    <div class="modal" id="modal-nuevo-asunto">
+        <div class="modal-content">
+            <div class="modal-header">
                 <h3><i class="fas fa-plus"></i> Nuevo Asunto</h3>
                 <button class="btn btn-danger" id="cerrar-modal-nuevo-asunto"><i class="fas fa-times"></i> Cerrar</button>
-                </div>
-                <div class="modal-body">
+            </div>
+            <div class="modal-body">
                 <form id="form-nuevo-asunto">
                     <div class="form-row">
-                    <div class="form-group">
-                        <label>Expediente*</label>
-                        <input type="text" id="na-expediente" required placeholder="0000/2025">
-                    </div>
-                    <div class="form-group">
-                        <label>Materia*</label>
-                        <select id="na-materia" required>
-                        <option value="">Selecciona...</option>
-                        <option>Laboral</option>
-                        <option>Penal</option>
-                        <option>Mercantil</option>
-                        <option>Civil</option>
-                        <option>Fiscal</option>
-                        </select>
-                    </div>
-                    </div>
-                    <div class="form-row">
-                    <div class="form-group">
-                        <label>Actor / Cliente*</label>
-                        <input type="text" id="na-nombre" required placeholder="Nombre completo del actor">
-                    </div>
-                    <div class="form-group">
-                        <label>Demandado</label>
-                        <input type="text" id="na-demandado" placeholder="Parte demandada / Empresa">
-                    </div>
+                        <div class="form-group">
+                            <label>Expediente*</label>
+                            <input type="text" id="na-expediente" required placeholder="0000/2025">
+                        </div>
+                        <div class="form-group">
+                            <label>Materia*</label>
+                            <select id="na-materia" required>
+                                <option value="">Selecciona...</option>
+                                <option>Laboral</option>
+                                <option>Penal</option>
+                                <option>Mercantil</option>
+                                <option>Civil</option>
+                                <option>Fiscal</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-row">
-                    <div class="form-group">
-                        <label>Abogado responsable</label>
-                        <input type="text" id="na-abogado" placeholder="Lic. Apellido">
+                        <div class="form-group">
+                            <label>Actor / Quejoso*</label>
+                            <input type="text" id="na-nombre" required placeholder="Nombre completo del actor">
+                        </div>
+                        <div class="form-group">
+                            <label>Demandado</label>
+                            <input type="text" id="na-demandado" placeholder="Parte demandada / Empresa">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Abogado responsable</label>
+                            <input type="text" id="na-abogado" placeholder="Lic. Apellido">
+                        </div>
+                        <div class="form-group">
+                            <label>Prioridad</label>
+                            <select id="na-prioridad">
+                                <option>Media</option>
+                                <option>Alta</option>
+                                <option>Baja</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label>Prioridad</label>
-                        <select id="na-prioridad">
-                        <option>Media</option>
-                        <option>Alta</option>
-                        <option>Baja</option>
-                        </select>
-                    </div>
-                    </div>
-                    <div class="form-group">
-                    <label>Descripción</label>
-                    <textarea id="na-descripcion" rows="3" placeholder="Breve descripción del asunto"></textarea>
+                        <label>Descripción</label>
+                        <textarea id="na-descripcion" rows="3" placeholder="Breve descripción del asunto"></textarea>
                     </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn" id="cancelar-nuevo-asunto">Cancelar</button>
-                    <button type="submit" class="btn btn-primary" id="guardar-nuevo-asunto">
-                        <i class="fas fa-save"></i> Guardar
-                    </button>
+                        <button type="button" class="btn" id="cancelar-nuevo-asunto">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" id="guardar-nuevo-asunto">
+                            <i class="fas fa-save"></i> Guardar
+                        </button>
                     </div>
                 </form>
-                </div>
             </div>
-            </div>
-
-
+        </div>
+    </div>
+    
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/asuntos.js"></script>
     <script src="js/recordatorios.js"></script>
     
@@ -226,5 +227,6 @@
             }
         });
     </script>
+    
 </body>
 </html>

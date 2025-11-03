@@ -29,6 +29,8 @@ function loadAudiencias() {
         materia: 'Laboral',
         demandado: 'Empresa Constructora S.A. de C.V.',
         prioridad: 'Alta',
+        abogadoResponsable: 'Lic. Juan Pérez',
+        abogadoComparece: 'Lic. María Torres',
         actaNombre: ''
       },
       {
@@ -61,6 +63,9 @@ function loadAudiencias() {
         <td>${audiencia.tribunal}</td>
         <td>${audiencia.expediente}</td>
         <td>${audiencia.actor}</td>
+        <td>${audiencia.abogadoResponsable}</td>
+        <td>${audiencia.abogadoComparece}</td>
+        
 
         <td>
           <div class="acuse-container">
@@ -125,11 +130,14 @@ function saveAudiencia() {
   const demandado = document.getElementById('audiencia-demandado').value;
   const observaciones = document.getElementById('audiencia-observaciones').value;
   const prioridad = document.getElementById('audiencia-prioridad').value;
+  const abogadoResponsable = document.getElementById('audiencia-abogado-responsable').value;
+  const abogadoComparece = document.getElementById('audiencia-abogado-comparece').value;
 
-  if (!fecha || !hora || !tipo || !materia || !tribunal || !expediente || !actor || !demandado || !prioridad) {
+  if (!fecha || !hora || !tipo || !materia || !tribunal || !expediente || !actor || !demandado || !prioridad  || !abogadoResponsable || !abogadoComparece) {
     alert('Por favor, complete todos los campos obligatorios');
     return;
   }
+  
 
   if (id) {
     // Modo edición
@@ -138,7 +146,7 @@ function saveAudiencia() {
       AUDIENCIAS[idx] = {
         ...AUDIENCIAS[idx],
         fecha, hora, tipo, materia, tribunal, expediente, actor, demandado, prioridad,
-        observaciones
+        observaciones, abogadoResponsable, abogadoComparece
       };
       alert('Audiencia actualizada correctamente.');
     } else {
@@ -149,7 +157,7 @@ function saveAudiencia() {
     const newId = AUDIENCIAS.length ? Math.max(...AUDIENCIAS.map(a => a.id)) + 1 : 1;
     AUDIENCIAS.push({
       id: newId, fecha, hora, tipo, materia, tribunal, expediente, actor, demandado, prioridad,
-      observaciones,
+      observaciones, abogadoResponsable, abogadoComparece,
       actaNombre: ''
     });
     alert('Audiencia creada correctamente.');
@@ -420,4 +428,36 @@ function escapeHTML(str) {
   }[m]));
 }
 
+function exportAudienciasToExcel() {
+  if (!AUDIENCIAS || AUDIENCIAS.length === 0) {
+    alert('No hay audiencias para exportar.');
+    return;
+  }
+
+  // Estructuramos los datos para Excel
+  const data = AUDIENCIAS.map(a => ({
+    'ID': a.id,
+    'Fecha': formatDate(a.fecha),
+    'Hora': a.hora,
+    'Tribunal': a.tribunal,
+    'Expediente': a.expediente,
+    'Actor': a.actor,
+    'Demandado': a.demandado,
+    'Tipo': a.tipo,
+    'Materia': a.materia,
+    'Prioridad': a.prioridad,
+    'Abogado Responsable': a.abogadoResponsable || '',
+    'Abogado que Comparece': a.abogadoComparece || '',
+    'Observaciones': a.observaciones || '',
+    'Acta': a.actaNombre || ''
+  }));
+
+  // Creamos la hoja de cálculo
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.json_to_sheet(data);
+  XLSX.utils.book_append_sheet(wb, ws, 'Audiencias');
+
+  // Generamos y descargamos el archivo
+  XLSX.writeFile(wb, 'audiencias.xlsx');
+}
 
