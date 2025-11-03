@@ -1,19 +1,23 @@
 function initTerminos() {
     // Cargar datos de términos
     loadTerminos();
-    
+
     // Configurar búsqueda
     setupSearchTerminos();
-    
+
     // Configurar filtros
     setupFiltersTerminos();
-    
-    // El botón para nuevo término ahora está manejado en el HTML
+
+    // Configurar exportación a Excel
+    const btnExportar = document.getElementById('exportar-excel');
+    if (btnExportar) {
+        btnExportar.addEventListener('click', exportarTerminosExcel);
+    }
 }
 
 function loadTerminos() {
     const tbody = document.getElementById('terminos-body');
-    
+
     // Datos de ejemplo
     const terminos = [
         {
@@ -45,12 +49,14 @@ function loadTerminos() {
             estatus: 'Liberado'
         }
     ];
-    
+
+    window._terminos = terminos; // Guardar globalmente para exportación
+
     let html = '';
     terminos.forEach(termino => {
         const fechaIngresoClass = isToday(termino.fechaIngreso) ? 'current-date' : '';
         const fechaVencimientoClass = isToday(termino.fechaVencimiento) ? 'current-date' : '';
-        
+
         html += `
             <tr>
                 <td class="${fechaIngresoClass}">${formatDate(termino.fechaIngreso)}</td>
@@ -60,8 +66,7 @@ function loadTerminos() {
                 <td>${termino.asunto}</td>
                 <td>${termino.prestacion}</td>
                 <td>${termino.abogado}</td>
-                <td>
-                    ${termino.estatus === 'Presentado' ? 
+                <td>${termino.estatus === 'Presentado' ? 
                         `<div class="acuse-container">
                             <div class="acuse-text">ACUSE-${termino.expediente.replace('/', '-')}.pdf</div>
                             <div class="acuse-actions">
@@ -69,16 +74,14 @@ function loadTerminos() {
                                     <i class="fas fa-download"></i>
                                 </button>
                             </div>
-                        </div>` : 
-                        '<button class="btn btn-warning btn-sm">Subir acuse</button>'}
+                        </div>` 
+                        : '<button class="btn btn-warning btn-sm">Subir acuse</button>'}
                 </td>
                 <td class="actions">
                     <button class="btn btn-primary btn-sm edit-termino" data-id="${termino.id}">
                         <i class="fas fa-edit"></i>
                     </button>
-                    <button class="btn btn-danger btn-sm delete-termino" data-id="${termino.id}">
-                        <i class="fas fa-trash"></i>
-                    </button>
+                    
                     ${termino.estatus !== 'Presentado' ? 
                         `<button class="btn btn-presentado btn-sm mark-presentado" data-id="${termino.id}">
                             <i class="fas fa-check"></i> Presentar
@@ -88,29 +91,40 @@ function loadTerminos() {
             </tr>
         `;
     });
-    
+
     tbody.innerHTML = html;
-    
-    // Configurar botones de acción
     setupActionButtons();
 }
 
+function exportarTerminosExcel() {
+    if (!window._terminos || window._terminos.length === 0) {
+        alert('No hay datos para exportar.');
+        return;
+    }
+
+    // Crear hoja de cálculo
+    const ws = XLSX.utils.json_to_sheet(window._terminos);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Términos');
+
+    // Generar archivo y descargar
+    XLSX.writeFile(wb, 'terminos.xlsx');
+    alert('Archivo Excel generado correctamente.');
+}
+
 function setupActionButtons() {
-    // Botones de edición
     document.querySelectorAll('.edit-termino').forEach(button => {
         button.addEventListener('click', function() {
             const id = this.getAttribute('data-id');
-            alert('Editar término ID: ' + id);
+            openTerminoModal({ id });
         });
     });
-    
-    // Botones de marcar como presentado
+
     document.querySelectorAll('.mark-presentado').forEach(button => {
         button.addEventListener('click', function() {
             const id = this.getAttribute('data-id');
             if (confirm('¿Marcar este término como presentado?')) {
-                alert('Término ' + id + ' marcado como presentado');
-                // Recargar la tabla
+                alert(`Término ${id} marcado como presentado`);
                 loadTerminos();
             }
         });
@@ -126,19 +140,13 @@ function setupSearchTerminos() {
         
         rows.forEach(row => {
             const text = row.textContent.toLowerCase();
-            if (text.includes(searchTerm)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
+            row.style.display = text.includes(searchTerm) ? '' : 'none';
         });
     });
 }
 
 function setupFiltersTerminos() {
-    // Configurar filtros de términos
     const filters = ['filter-tribunal-termino', 'filter-estado-termino', 'filter-estatus-termino', 'filter-prioridad-termino'];
-    
     filters.forEach(filterId => {
         const filter = document.getElementById(filterId);
         if (filter) {
@@ -148,7 +156,6 @@ function setupFiltersTerminos() {
 }
 
 function applyFiltersTerminos() {
-    // Lógica para aplicar filtros
     console.log('Aplicando filtros...');
 }
 

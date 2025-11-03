@@ -31,6 +31,7 @@ function initBasicComponents() {
     // Cargar datos básicos
     document.getElementById('total-audiencias').textContent = '12';
     document.getElementById('total-terminos').textContent = '8';
+    document.getElementById('total-presentado').textContent = '10';
 }
 
 function initCalendar() {

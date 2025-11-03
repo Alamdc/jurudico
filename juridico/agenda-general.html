@@ -9,33 +9,18 @@
     <link rel="stylesheet" href="css/agenda-general.css">
 </head>
 <body>
-    <!-- Sidebar de navegación ACTUALIZADO -->
+    <!-- Sidebar de navegación -->
     <div class="sidebar">
         <div class="sidebar-header">
             <i class="fas fa-gavel fa-2x"></i>
             <h2>Agenda Legal</h2>
         </div>
         <div class="sidebar-nav">
-            <a href="dashboard.html" class="nav-item">
-                <i class="fas fa-chart-bar"></i>
-                <span>Dashboard</span>
-            </a>
-            <a href="audiencias.html" class="nav-item">
-                <i class="fas fa-gavel"></i>
-                <span>Audiencias</span>
-            </a>
-            <a href="terminos.html" class="nav-item">
-                <i class="fas fa-clock"></i>
-                <span>Términos</span>
-            </a>
-            <a href="asuntos.html" class="nav-item">
-                <i class="fas fa-folder-open"></i>
-                <span>Asuntos</span>
-            </a>
-            <a href="agenda-general.html" class="nav-item active">
-                <i class="fas fa-calendar-alt"></i>
-                <span>Agenda General</span>
-            </a>
+            <a href="dashboard.html" class="nav-item"><i class="fas fa-chart-bar"></i><span>Dashboard</span></a>
+            <a href="audiencias.html" class="nav-item"><i class="fas fa-gavel"></i><span>Audiencias</span></a>
+            <a href="terminos.html" class="nav-item"><i class="fas fa-clock"></i><span>Términos</span></a>
+            <a href="asuntos.html" class="nav-item"><i class="fas fa-folder-open"></i><span>Asuntos</span></a>
+            <a href="agenda-general.html" class="nav-item active"><i class="fas fa-calendar-alt"></i><span>Agenda General</span></a>
         </div>
     </div>
     
@@ -58,15 +43,9 @@
                     <input type="text" id="search-agenda" placeholder="Buscar en agenda...">
                 </div>
                 <div class="view-controls">
-                    <button class="btn btn-primary active" data-view="todos">
-                        <i class="fas fa-list"></i> Todos
-                    </button>
-                    <button class="btn btn-secondary" data-view="audiencias">
-                        <i class="fas fa-gavel"></i> Solo Audiencias
-                    </button>
-                    <button class="btn btn-secondary" data-view="terminos">
-                        <i class="fas fa-clock"></i> Solo Términos
-                    </button>
+                    <button class="btn btn-primary active" data-view="todos"><i class="fas fa-list"></i> Todos</button>
+                    <button class="btn btn-secondary" data-view="audiencias"><i class="fas fa-gavel"></i> Solo Audiencias</button>
+                    <button class="btn btn-secondary" data-view="terminos"><i class="fas fa-clock"></i> Solo Términos</button>
                 </div>
             </div>
 
@@ -87,6 +66,27 @@
                             <option value="pasados">Pasados</option>
                         </select>
                     </div>
+
+                    <!-- 🔹 NUEVO FILTRO POR MES -->
+                    <div class="filter-group">
+                        <label for="filter-mes">Mes</label>
+                        <select id="filter-mes">
+                            <option value="">Todos los meses</option>
+                            <option value="0">Enero</option>
+                            <option value="1">Febrero</option>
+                            <option value="2">Marzo</option>
+                            <option value="3">Abril</option>
+                            <option value="4">Mayo</option>
+                            <option value="5">Junio</option>
+                            <option value="6">Julio</option>
+                            <option value="7">Agosto</option>
+                            <option value="8">Septiembre</option>
+                            <option value="9">Octubre</option>
+                            <option value="10">Noviembre</option>
+                            <option value="11">Diciembre</option>
+                        </select>
+                    </div>
+
                     <div class="filter-group">
                         <label for="filter-prioridad">Prioridad</label>
                         <select id="filter-prioridad">
@@ -120,128 +120,47 @@
 
             <!-- Estadísticas rápidas -->
             <div class="agenda-stats">
-                <div class="stat-item">
-                    <div class="stat-icon audiencia">
-                        <i class="fas fa-gavel"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-number" id="total-audiencias">0</div>
-                        <div class="stat-label">Audiencias</div>
-                    </div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon termino">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-number" id="total-terminos">0</div>
-                        <div class="stat-label">Términos</div>
-                    </div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon pendiente">
-                        <i class="fas fa-exclamation-circle"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-number" id="total-pendientes">0</div>
-                        <div class="stat-label">Pendientes</div>
-                    </div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon urgente">
-                        <i class="fas fa-fire"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-number" id="total-urgentes">0</div>
-                        <div class="stat-label">Urgentes</div>
-                    </div>
-                </div>
+                <div class="stat-item"><div class="stat-icon audiencia"><i class="fas fa-gavel"></i></div><div class="stat-info"><div class="stat-number" id="total-audiencias">0</div><div class="stat-label">Audiencias</div></div></div>
+                <div class="stat-item"><div class="stat-icon termino"><i class="fas fa-clock"></i></div><div class="stat-info"><div class="stat-number" id="total-terminos">0</div><div class="stat-label">Términos</div></div></div>
+                <div class="stat-item"><div class="stat-icon completado"><i class="fas fa-bell"></i></div><div class="stat-info"><div class="stat-number" id="total-pendientes">0</div><div class="stat-label">Presentados</div></div></div>
             </div>
 
-            <!-- Vista de agenda -->
-            <div class="agenda-view">
-                <!-- Vista por Días -->
-                <div class="view-section active" id="view-dias">
-                    <div class="section-header">
-                        <h3><i class="fas fa-calendar-day"></i> Vista por Días</h3>
-                        <div class="date-navigation">
-                            <button class="btn btn-sm btn-outline" id="prev-week">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <span class="current-week" id="current-week">Semana actual</span>
-                            <button class="btn btn-sm btn-outline" id="next-week">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="days-grid" id="days-grid">
-                        <!-- Los días se cargarán dinámicamente -->
-                    </div>
-                </div>
-
-                <!-- Vista de Lista -->
-                <div class="view-section" id="view-lista">
-                    <div class="section-header">
-                        <h3><i class="fas fa-list"></i> Vista de Lista</h3>
-                    </div>
-                    
-                    <div class="agenda-list" id="agenda-list">
-                        <!-- Los eventos se cargarán dinámicamente -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Eventos del día de hoy -->
+            <!-- Eventos de hoy -->
             <div class="hoy-section">
                 <div class="section-header">
                     <h3><i class="fas fa-sun"></i> Eventos de Hoy</h3>
                     <span class="badge badge-primary" id="hoy-count">0</span>
                 </div>
-                <div class="hoy-events" id="hoy-events">
-                    <!-- Eventos de hoy se cargarán dinámicamente -->
+                <div class="hoy-events" id="hoy-events"></div>
+            </div>
+
+            <div class="dashboard-card">
+                <h3><i class="fas fa-file-contract"></i> Términos Presentados</h3>
+                <div class="terminos-presentado-container">
+                    <div class="terminos-presentado-list" id="terminos-presentado-list"></div>
                 </div>
             </div>
-            <div class="dashboard-card">
-                    <h3><i class="fas fa-file-contract"></i> Términos Presentados</h3>
-                    <div class="terminos-presentado-container">
-                        <div class="terminos-presentado-list" id="terminos-presentado-list">
-                            <!-- Los términos presentados se cargarán dinámicamente -->
-                        </div>
-                    </div>
-                </div>
         </div>
     </div>
 
-    <!-- Modal para ver detalles del evento -->
+    <!-- Modal de evento -->
     <div class="modal" id="modal-evento">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="modal-evento-title">Detalles del Evento</h2>
-                <button class="btn btn-danger" id="close-modal-evento">
-                    <i class="fas fa-times"></i>
-                </button>
+                <button class="btn btn-danger" id="close-modal-evento"><i class="fas fa-times"></i></button>
             </div>
-            <div class="modal-body">
-                <div id="evento-detalles">
-                    <!-- Detalles se cargarán dinámicamente -->
-                </div>
-            </div>
+            <div class="modal-body"><div id="evento-detalles"></div></div>
             <div class="modal-footer">
-                <button class="btn btn-primary" id="btn-ir-expediente">
-                    <i class="fas fa-folder-open"></i> Ir al Expediente
-                </button>
-                <button class="btn btn-secondary" id="btn-cerrar-evento">
-                    Cerrar
-                </button>
+                <button class="btn btn-primary" id="btn-ir-expediente"><i class="fas fa-folder-open"></i> Ir al Expediente</button>
+                <button class="btn btn-secondary" id="btn-cerrar-evento">Cerrar</button>
             </div>
         </div>
     </div>
 
     <!-- Scripts -->
-     <script src="js/dashboard.js"></script>
+    <script src="js/dashboard.js"></script>
     <script src="js/agenda-general.js"></script>
-    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof initAgendaGeneral === 'function') {

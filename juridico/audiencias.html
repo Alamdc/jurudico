@@ -6,6 +6,8 @@
     <title>Audiencias - Agenda Legal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
+    <!-- Librería para exportar a Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
     <!-- Sidebar de navegación -->
@@ -31,14 +33,11 @@
                 <i class="fas fa-folder"></i>
                 <span>Asuntos</span>
             </a>
-
             <a href="agenda-general.html" class="nav-item">
                 <i class="fas fa-calendar-alt"></i>
                 <span>Agenda General</span>
             </a>
         </div>
-    
-       
     </div>
     
     <!-- Contenido principal -->
@@ -60,9 +59,14 @@
                         <i class="fas fa-search"></i>
                         <input type="text" id="search-audiencias" placeholder="Buscar en audiencias...">
                     </div>
-                    <button class="btn btn-primary" id="add-audiencia">
-                        <i class="fas fa-plus"></i> Nueva Audiencia
-                    </button>
+                    <div class="toolbar-buttons">
+                        <button class="btn btn-success" id="export-excel">
+                            <i class="fas fa-file-excel"></i> Exportar a Excel
+                        </button>
+                        <button class="btn btn-primary" id="add-audiencia">
+                            <i class="fas fa-plus"></i> Nueva Audiencia
+                        </button>
+                    </div>
                 </div>
                 
                 <!-- Filtros para audiencias -->
@@ -83,6 +87,7 @@
                                 <option value="Reanudacion">Reanudación</option>
                                 <option value="Incidental">Incidental</option>
                                 <option value="Constitucional">Constitucional</option>
+                                <option value="Testimonial">Testimonial</option>
                             </select>
                         </div>
                         <div class="filter-group">
@@ -158,271 +163,35 @@
                                 <th>Tribunal</th>
                                 <th>Expediente</th>
                                 <th>Actor</th>
+                                <th>Abogado Responsable</th>
+                                <th>Abogado Comparece</th>
                                 <th>Acta de Audiencia</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>    
-                    <tbody id="audiencias-body">
-                            <!-- Los datos se cargarán dinámicamente -->
-                        </tbody>
+                        <tbody id="audiencias-body"></tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    
-    <!-- Scripts -->
-    <script src="js/audiencias.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof initAudiencias === 'function') {
-                initAudiencias();
-            }
-        });
-    </script>
-    <!-- Modal para Audiencias -->
-    <div class="modal" id="modal-audiencia">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modal-audiencia-title">Nueva Audiencia</h2>
-                <button class="btn btn-danger" id="close-modal-audiencia">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="form-audiencia">
-                    <input type="hidden" id="audiencia-id">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="audiencia-fecha">Fecha</label>
-                            <input type="date" id="audiencia-fecha" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="audiencia-hora">Hora</label>
-                            <input type="time" id="audiencia-hora" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="audiencia-tipo">Tipo de Audiencia</label>
-                            <select id="audiencia-tipo" required>
-                                <option value="">Seleccione un tipo</option>
-                                <option value="Inicial">Inicial</option>
-                                <option value="Intermedia">Intermedia</option>
-                                <option value="Ratificación">Ratificación</option>
-                                <option value="Admisión">Admisión</option>
-                                <option value="Confesional">Confesional</option>
-                                <option value="Reanudacion">Reanudación</option>
-                                <option value="Incidental">Incidental</option>
-                                <option value="Constitucional">Constitucional</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="audiencia-materia">Materia</label>
-                            <select id="audiencia-materia" required>
-                                <option value="">Seleccione una materia</option>
-                                <option value="Laboral">Laboral</option>
-                                <option value="Penal">Penal</option>
-                                <option value="Mercantil">Mercantil</option>
-                                <option value="Civil">Civil</option>
-                                <option value="Fiscal">Fiscal</option>
-                                <option value="Administrativa">Administrativa</option>
-                                <option value="Agrario">Agrario</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="audiencia-tribunal">Tribunal</label>
-                            <input type="text" id="audiencia-tribunal" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="audiencia-expediente">Expediente</label>
-                            <input type="text" id="audiencia-expediente" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="audiencia-actor">Actor</label>
-                            <input type="text" id="audiencia-actor" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="audiencia-demandado">Demandado</label>
-                            <input type="text" id="audiencia-demandado" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="audiencia-observaciones">Observaciones</label>
-                        <textarea id="audiencia-observaciones" rows="3"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="audiencia-prioridad">Prioridad</label>
-                        <select id="audiencia-prioridad" required>
-                            <option value="">Seleccione prioridad</option>
-                            <option value="Alta">Alta</option>
-                            <option value="Media">Media</option>
-                            <option value="Baja">Baja</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="audiencia-acta">Acta de Audiencia</label>
-                        <input type="file" id="audiencia-acta" accept=".pdf,.doc,.docx">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-danger" id="cancel-audiencia">Cancelar</button>
-                <button class="btn btn-success" id="save-audiencia">Guardar Audiencia</button>
-            </div>
-        </div>
-    </div>
-        <!-- nuevo modal  -->
-    <!-- Modal Comentarios -->
-        <div class="modal" id="modal-comentarios">
-        <div class="modal-content" style="max-width: 700px;">
-            <div class="modal-header">
-            <h2>Comentarios de la audiencia</h2>
-            <button class="btn btn-danger" id="close-modal-comentarios">
-                <i class="fas fa-times"></i>
-            </button>
-            </div>
-
-            <div class="modal-body">
-            <input type="hidden" id="comentarios-audiencia-id">
-            
-            <div class="form-group">
-                <label for="nuevo-comentario">Nuevo comentario</label>
-                <textarea id="nuevo-comentario" rows="3" placeholder="Escribe tu comentario..."></textarea>
-            </div>
-
-            <div class="modal-footer" style="padding-left: 0;">
-                <button class="btn btn-success" id="save-comentario">
-                <i class="fas fa-paper-plane"></i> Guardar comentario
-                </button>
-            </div>
-
-            <hr>
-
-            <div>
-                <h3 style="margin-top: 0;">Historial</h3>
-                <ul id="lista-comentarios" class="comment-list" style="list-style: none; padding-left: 0; margin: 0;">
-                <!-- Se llena dinámicamente -->
-                </ul>
-            </div>
-            </div>
-        </div>
-        </div>
 
     <!-- Scripts -->
     <script src="js/audiencias.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            if (typeof initAudiencias === 'function') {
-                initAudiencias();
+            if (typeof initAudiencias === 'function') initAudiencias();
+
+            // ✅ Exportar a Excel
+            const btnExport = document.getElementById('export-excel');
+            if (btnExport) {
+                btnExport.addEventListener('click', function() {
+                    if (typeof exportAudienciasToExcel === 'function') {
+                        exportAudienciasToExcel();
+                    }
+                });
             }
-            initModalAudiencias();
-             initModalComentarios(); // <- AÑADIDO
         });
-
-        function initModalAudiencias() {
-            // Modal de audiencias
-            const modalAudiencia = document.getElementById('modal-audiencia');
-            const btnAddAudiencia = document.getElementById('add-audiencia');
-            const btnCloseAudiencia = document.getElementById('close-modal-audiencia');
-            const btnCancelAudiencia = document.getElementById('cancel-audiencia');
-            const btnSaveAudiencia = document.getElementById('save-audiencia');
-
-            // Abrir modal
-            if (btnAddAudiencia) {
-                btnAddAudiencia.addEventListener('click', function() {
-                    openAudienciaModal();
-                });
-            }
-
-            // Cerrar modal
-            if (btnCloseAudiencia) {
-                btnCloseAudiencia.addEventListener('click', function() {
-                    modalAudiencia.style.display = 'none';
-                });
-            }
-
-            if (btnCancelAudiencia) {
-                btnCancelAudiencia.addEventListener('click', function() {
-                    modalAudiencia.style.display = 'none';
-                });
-            }
-
-            // Guardar audiencia
-            if (btnSaveAudiencia) {
-                btnSaveAudiencia.addEventListener('click', function() {
-                    saveAudiencia();
-                });
-            }
-
-            // Cerrar modal al hacer clic fuera
-            window.addEventListener('click', function(event) {
-                if (event.target === modalAudiencia) {
-                    modalAudiencia.style.display = 'none';
-                }
-            });
-        }
-
-        function openAudienciaModal(audiencia = null) {
-            const modal = document.getElementById('modal-audiencia');
-            const title = document.getElementById('modal-audiencia-title');
-            const form = document.getElementById('form-audiencia');
-            
-            if (audiencia) {
-                title.textContent = 'Editar Audiencia';
-                document.getElementById('audiencia-id').value = audiencia.id;
-                document.getElementById('audiencia-fecha').value = audiencia.fecha;
-                document.getElementById('audiencia-hora').value = audiencia.hora;
-                document.getElementById('audiencia-tipo').value = audiencia.tipo;
-                document.getElementById('audiencia-materia').value = audiencia.materia;
-                document.getElementById('audiencia-tribunal').value = audiencia.tribunal;
-                document.getElementById('audiencia-expediente').value = audiencia.expediente;
-                document.getElementById('audiencia-actor').value = audiencia.actor;
-                document.getElementById('audiencia-demandado').value = audiencia.demandado;
-                document.getElementById('audiencia-observaciones').value = audiencia.observaciones;
-                document.getElementById('audiencia-prioridad').value = audiencia.prioridad;
-            } else {
-                title.textContent = 'Nueva Audiencia';
-                if (form) form.reset();
-                document.getElementById('audiencia-id').value = '';
-            }
-            
-            modal.style.display = 'flex';
-        }
-
-        function saveAudiencia() {
-            const id = document.getElementById('audiencia-id').value;
-            const fecha = document.getElementById('audiencia-fecha').value;
-            const hora = document.getElementById('audiencia-hora').value;
-            const tipo = document.getElementById('audiencia-tipo').value;
-            const materia = document.getElementById('audiencia-materia').value;
-            const tribunal = document.getElementById('audiencia-tribunal').value;
-            const expediente = document.getElementById('audiencia-expediente').value;
-            const actor = document.getElementById('audiencia-actor').value;
-            const demandado = document.getElementById('audiencia-demandado').value;
-            const observaciones = document.getElementById('audiencia-observaciones').value;
-            const prioridad = document.getElementById('audiencia-prioridad').value;
-            
-            if (!fecha || !hora || !tipo || !materia || !tribunal || !expediente || !actor || !demandado || !prioridad) {
-                alert('Por favor, complete todos los campos obligatorios');
-                return;
-            }
-            
-            alert('Audiencia guardada correctamente:\n' +
-                  'Fecha: ' + fecha + '\n' +
-                  'Hora: ' + hora + '\n' +
-                  'Tipo: ' + tipo + '\n' +
-                  'Expediente: ' + expediente);
-            
-            // Cerrar modal
-            document.getElementById('modal-audiencia').style.display = 'none';
-            
-            // Aquí podrías recargar la tabla o agregar la nueva audiencia
-        }
     </script>
 </body>
 </html>
