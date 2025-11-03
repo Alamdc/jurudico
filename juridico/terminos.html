@@ -1,115 +1,282 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Términos - Agenda Legal</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
     <!-- Sidebar de navegación -->
     <div class="sidebar">
-        <div class="sidebar-header">
-            <i class="fas fa-gavel fa-2x"></i>
-            <h2>Agenda Legal</h2>
-        </div>
-        <div class="sidebar-nav">
-            <a href="dashboard.html" class="nav-item">
-                <i class="fas fa-chart-bar"></i>
-                <span>Dashboard</span>
-            </a>
-            <a href="audiencias.html" class="nav-item">
-                <i class="fas fa-gavel"></i>
-                <span>Audiencias</span>
-            </a>
-            <a href="terminos.html" class="nav-item active">
-                <i class="fas fa-clock"></i>
-                <span>Términos</span>
-            </a>
-              <a href="asuntos.html" class="nav-item">
-                <i class="fas fa-folder"></i>
-                <span>Asuntos</span>
-            </a> 
-            <a href="agenda-general.html" class="nav-item">
-                <i class="fas fa-calendar-alt"></i>
-                <span>Agenda General</span>
-            </a>
-        </div>
+      <div class="sidebar-header">
+        <i class="fas fa-gavel fa-2x"></i>
+        <h2>Agenda Legal</h2>
+      </div>
+      <div class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item">
+          <i class="fas fa-chart-bar"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="audiencias.html" class="nav-item">
+          <i class="fas fa-gavel"></i>
+          <span>Audiencias</span>
+        </a>
+        <a href="terminos.html" class="nav-item active">
+          <i class="fas fa-clock"></i>
+          <span>Términos</span>
+        </a>
+        <a href="asuntos.html" class="nav-item">
+          <i class="fas fa-folder"></i>
+          <span>Asuntos</span>
+        </a>
+        <a href="agenda-general.html" class="nav-item">
+          <i class="fas fa-calendar-alt"></i>
+          <span>Agenda General</span>
+        </a>
+      </div>
     </div>
-    
+
     <!-- Contenido principal -->
     <div class="main-content">
-        <div class="container">
-            <header>
-                <div class="header-content">
-                    <h1><i class="fas fa-clock"></i> Términos - Agenda Legal</h1>
-                    <div class="user-info">
-                        <i class="fas fa-user-circle"></i> Usuario Abogado
-                    </div>
-                </div>
-            </header>
-            
-            <!-- Tabla de Términos -->
-            <div class="tab-content active" id="terminos">
-                <div class="toolbar">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="search-terminos" placeholder="Buscar en términos...">
-                    </div>
-                    <div class="toolbar-buttons">
-                        <button class="btn btn-success" id="exportar-excel">
-                            <i class="fas fa-file-excel"></i> Exportar a Excel
-                        </button>
-                        <button class="btn btn-primary" id="add-termino">
-                            <i class="fas fa-plus"></i> Nuevo Término
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Filtros para términos -->
-                <div class="filters">
-                    <div class="filters-title">
-                        <i class="fas fa-filter"></i> Filtros de Términos
-                    </div>
-                    <!-- ... filtros originales sin cambios ... -->
-                </div>
-                
-                <div class="table-container">
-                    <table id="tabla-terminos">
-                        <thead>
-                            <tr>
-                                <th>F. Ingreso</th>
-                                <th>F. Vencimiento</th>
-                                <th>Expediente</th>
-                                <th>Actor/Quejoso</th>
-                                <th>Asunto</th>
-                                <th>Prestación</th>
-                                <th>Abogado</th>
-                                <th>Acuse</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="terminos-body">
-                            <!-- Los datos se cargarán dinámicamente -->
-                        </tbody>
-                    </table>
-                </div>
+      <div class="container">
+        <header>
+          <div class="header-content">
+            <h1><i class="fas fa-clock"></i> Términos - Agenda Legal</h1>
+            <div class="user-info">
+              <i class="fas fa-user-circle"></i> Usuario Abogado
             </div>
+          </div>
+        </header>
+        <!-- Filtros para términos -->
+
+        <!-- Tabla de Términos -->
+        <div class="tab-content active" id="terminos">
+          <div class="toolbar">
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input
+                type="text"
+                id="search-terminos"
+                placeholder="Buscar en términos..."
+              />
+            </div>
+            <div class="toolbar-buttons">
+              <button class="btn btn-success" id="exportar-excel">
+                <i class="fas fa-file-excel"></i> Exportar a Excel
+              </button>
+              <button class="btn btn-primary" id="add-termino">
+                <i class="fas fa-plus"></i> Nuevo Término
+              </button>
+            </div>
+          </div>
+                  <div class="filters">
+          <div class="filters-title">
+            <i class="fas fa-filter"></i> Filtros de Términos
+          </div>
+          <div class="filter-row">
+            <div class="filter-group">
+              <label for="filter-tribunal-termino">Tribunal</label>
+              <select id="filter-tribunal-termino">
+                <option value="todos">Todos los Tribunales</option>
+                <option value="Primer Tribunal Colegiado en Materia Laboral">
+                  Primer Tribunal Colegiado
+                </option>
+                <option value="Tercer Tribunal de Enjuiciamiento">
+                  Tercer Tribunal de Enjuiciamiento
+                </option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="filter-estado-termino">Gerencias</label>
+              <select id="filter-estado-termino">
+                <option value="todos">Todos los estados</option>
+                <option value="Aguascalientes">Aguascalientes</option>
+                <option value="Baja California">Baja California</option>
+                <option value="Baja California Sur">Baja California Sur</option>
+                <option value="Campeche">Campeche</option>
+                <option value="Chiapas">Chiapas</option>
+                <option value="Chihuahua">Chihuahua</option>
+                <option value="Ciudad de México">Ciudad de México</option>
+                <option value="Coahuila">Coahuila</option>
+                <option value="Colima">Colima</option>
+                <option value="Durango">Durango</option>
+                <option value="Estado de México">Estado de México</option>
+                <option value="Guanajuato">Guanajuato</option>
+                <option value="Guerrero">Guerrero</option>
+                <option value="Hidalgo">Hidalgo</option>
+                <option value="Jalisco">Jalisco</option>
+                <option value="Michoacán">Michoacán</option>
+                <option value="Morelos">Morelos</option>
+                <option value="Nayarit">Nayarit</option>
+                <option value="Nuevo León">Nuevo León</option>
+                <option value="Oaxaca">Oaxaca</option>
+                <option value="Puebla">Puebla</option>
+                <option value="Querétaro">Querétaro</option>
+                <option value="Quintana Roo">Quintana Roo</option>
+                <option value="San Luis Potosí">San Luis Potosí</option>
+                <option value="Sinaloa">Sinaloa</option>
+                <option value="Sonora">Sonora</option>
+                <option value="Tabasco">Tabasco</option>
+                <option value="Tamaulipas">Tamaulipas</option>
+                <option value="Tlaxcala">Tlaxcala</option>
+                <option value="Veracruz">Veracruz</option>
+                <option value="Yucatán">Yucatán</option>
+                <option value="Zacatecas">Zacatecas</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="filter-estatus-termino">Estatus</label>
+              <select id="filter-estatus-termino">
+                <option value="todos">Todos los Estatus</option>
+                <option value="Proyectista">Proyectista</option>
+                <option value="Liberado">Liberado</option>
+                <option value="Presentado">Presentado</option>
+                <option value="Pendiente">Pendiente</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="filter-prioridad-termino">Prioridad</label>
+              <select id="filter-prioridad-termino">
+                <option value="todos">Todas las Prioridades</option>
+                <option value="Alta">Alta</option>
+                <option value="Media">Media</option>
+                <option value="Baja">Baja</option>
+              </select>
+            </div>
+          </div>
         </div>
+
+          <div class="modal" id="modal-nuevo-termino" style="display: none">
+            <div class="modal-content large">
+              <div class="modal-header">
+                <h3>Agregar Nuevo Término</h3>
+                <span class="close-btn" id="cerrar-modal-termino">&times;</span>
+              </div>
+              <div class="modal-body">
+                <form id="form-nuevo-termino">
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="nt-expediente">Expediente</label>
+                      <input type="text" id="nt-expediente" required />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="nt-actor">Actor/Quejoso</label>
+                      <input type="text" id="nt-actor" required />
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="nt-asunto">Asunto</label>
+                    <input type="text" id="nt-asunto" required />
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="nt-prestacion">Prestación</label>
+                      <input type="text" id="nt-prestacion" />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="nt-abogado">Abogado</label>
+                      <select id="nt-abogado">
+                        <option value="Lic. Martínez">Lic. Martínez</option>
+                        <option value="Lic. González">Lic. González</option>
+                        <option value="Sin asignar">Sin asignar</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="nt-fechaIngreso">Fecha de Ingreso</label>
+                      <input type="date" id="nt-fechaIngreso" required />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="nt-fechaVencimiento"
+                        >Fecha de Vencimiento</label
+                      >
+                      <input type="date" id="nt-fechaVencimiento" required />
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="nt-prioridad">Prioridad</label>
+                      <select id="nt-prioridad">
+                        <option value="Media">Media</option>
+                        <option value="Alta">Alta</option>
+                        <option value="Baja">Baja</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="nt-estatus">Estatus Inicial</label>
+                      <select id="nt-estatus">
+                        <option value="Proyectista">Proyectista</option>
+                        <option value="Liberado">Liberado</option>
+                        <option value="Pendiente">Pendiente</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-actions">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      id="cancelar-termino"
+                    >
+                      Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                      Guardar Término
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table id="tabla-terminos">
+              <thead>
+                <tr>
+                  <th>F. Ingreso</th>
+                  <th>F. Vencimiento</th>
+                  <th>Expediente</th>
+                  <th>Actor/Quejoso</th>
+                  <th>Asunto</th>
+                  <th>Prestación</th>
+                  <th>Abogado</th>
+                  <th>Acuse</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="terminos-body">
+                <!-- Los datos se cargarán dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
-    
+
     <!-- Librería para exportar a Excel -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-    
+
     <!-- Scripts -->
     <script src="js/terminos.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof initTerminos === 'function') {
-                initTerminos();
-            }
-        });
+      document.addEventListener("DOMContentLoaded", function () {
+        if (typeof initTerminos === "function") {
+          initTerminos();
+        }
+      });
     </script>
-</body>
+  </body>
 </html>
